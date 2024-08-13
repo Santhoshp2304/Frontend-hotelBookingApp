@@ -20,23 +20,33 @@ function Home() {
   const filterByDate = (dates) => {
     const [startDate, endDate] = dates;
 
+    console.log(
+      moment("2024-08-16").isBetween(
+        moment(startDate.$d).format("YYYY-MM-DD"),
+        moment(endDate.$d).format("YYYY-MM-DD"),
+        null,
+        "[]"
+      )
+    );
     setFromdate(moment(startDate.$d).format("YYYY-MM-DD"));
     setTodate(moment(endDate.$d).format("YYYY-MM-DD"));
-  let tempRoom =[];
-    let availableRoom = rooms.map((room) => {
-      
-        let checkAvailability = room.currentbookings?.some(
-          (range) =>
-            moment(range.fromdate).isSame(
-              moment(startDate.$d).format("YYYY-MM-DD")
-            ) &&
-            moment(range.todate).isSame(moment(endDate.$d).format("YYYY-MM-DD"))
-        );
+    let tempRoom = [];
 
-        if (!checkAvailability) {
-          tempRoom.push(room);
-        }
-      
+    rooms.map((room) => {
+      let isBooked = room.currentbookings.some(
+        (booking) =>
+          moment(moment(startDate.$d).format("YYYY-MM-DD")).isSameOrBefore(
+            moment(booking.todate)
+          ) &&
+          moment(moment(endDate.$d).format("YYYY-MM-DD")).isSameOrAfter(
+            moment(booking.fromdate)
+          )
+      );
+
+      console.log(isBooked);
+      if (!isBooked) {
+        tempRoom.push(room);
+      }
     });
     console.log(tempRoom);
     setRooms(tempRoom);

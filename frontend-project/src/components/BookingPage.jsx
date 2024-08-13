@@ -1,11 +1,11 @@
 import axios from "axios";
-import React, { useContext, useEffect, useState } from "react";
-import { Button, Container } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import {  Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import moment from "moment";
-import { AuthContext } from "../context/AuthContext";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { message } from "antd";
+import StripeCheckout from "react-stripe-checkout";
 
 function BookingPage() {
   const { roomid, fromdate, todate } = useParams();
@@ -14,14 +14,16 @@ function BookingPage() {
   const [totaldays, setTotaldays] = useState(null);
   const user = localStorage.getItem("user");
   const userId = localStorage.getItem("userId");
-
+  const onToken = (token) => {
+    console.log(token);
+  };
   const bookRoom = async () => {
     const bookingDetails = {
       room: room.name,
       roomId: roomid,
       userId,
-      fromdate :moment(fromdate, "YYYY-MM-DD"),
-      todate :moment(todate, "YYYY-MM-DD"),
+      fromdate: moment(fromdate).format("YYYY-MM-DD"),
+      todate: moment(todate).format("YYYY-MM-DD"),
       totalamount,
       totaldays,
     };
@@ -31,7 +33,7 @@ function BookingPage() {
         `http://localhost:3000/apiBooking/book`,
         bookingDetails
       );
-      message.success(response.data)
+      message.success(response.data);
       console.log(response.data);
     } catch (error) {
       console.log(error.message);
@@ -53,7 +55,7 @@ function BookingPage() {
     const tdate = moment(todate, "YYYY-MM-DD");
     console.log(fdate);
     setTotaldays(moment.duration(tdate.diff(fdate)).asDays() + 1);
-    
+
     console.log(totaldays);
     console.log(room.rentperday);
   }, []);
@@ -88,9 +90,17 @@ function BookingPage() {
                 Total Amount :<CurrencyRupeeIcon /> {totalamount}
               </b>
             </p>
-            <Button variant="dark" className="mr-auto" onClick={bookRoom}>
-              Pay Now
-            </Button>
+
+            <StripeCheckout
+              amount={totalamount * 100}
+              token={onToken}
+              currency="INR"
+              stripeKey="pk_test_51PnNBFP0UQ2xoJVbXAHJIzM6qyC8UavbPYymPlx0tYngZllhUO0FLF52vlMVYvlYkT2VBfOe1WB3ZV4ailAWKSZh004oiMAZkY"
+            >
+              <button  className="mr-auto btn btn-dark">
+                Pay Now
+              </button>
+            </StripeCheckout>
           </div>
         </div>
       </Container>
