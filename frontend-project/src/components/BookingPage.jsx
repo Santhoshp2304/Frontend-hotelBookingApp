@@ -38,7 +38,7 @@ function BookingPage() {
     } catch (error) {
       console.log(error.message);
     }
-  };
+  }; 
 
   const fetchRoom = async () => {
     const response = await axios.get(
