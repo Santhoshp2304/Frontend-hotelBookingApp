@@ -1,11 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import {  Container } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import moment from "moment";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { message } from "antd";
 import StripeCheckout from "react-stripe-checkout";
+import Swal from "sweetalert2";
 
 function BookingPage() {
   const { roomid, fromdate, todate } = useParams();
@@ -14,10 +15,8 @@ function BookingPage() {
   const [totaldays, setTotaldays] = useState(null);
   const user = localStorage.getItem("user");
   const userId = localStorage.getItem("userId");
-  const onToken = (token) => {
+  const onToken = async (token) => {
     console.log(token);
-  };
-  const bookRoom = async () => {
     const bookingDetails = {
       room: room.name,
       roomId: roomid,
@@ -26,6 +25,7 @@ function BookingPage() {
       todate: moment(todate).format("YYYY-MM-DD"),
       totalamount,
       totaldays,
+      token,
     };
 
     try {
@@ -33,12 +33,21 @@ function BookingPage() {
         `http://localhost:3000/apiBooking/book`,
         bookingDetails
       );
-      message.success(response.data);
+      // message.success(response.data);
       console.log(response.data);
+      Swal.fire(
+        "Congrats!",
+        "Your room was booked successfully",
+        "success"
+      ).then((result) => {
+        window.location.href = `/bookinghistory`;
+      });
     } catch (error) {
       console.log(error.message);
+      // message.error(error);
+      Swal.fire("Oops!", "Something went wrong", "error");
     }
-  }; 
+  };
 
   const fetchRoom = async () => {
     const response = await axios.get(
@@ -97,9 +106,7 @@ function BookingPage() {
               currency="INR"
               stripeKey="pk_test_51PnNBFP0UQ2xoJVbXAHJIzM6qyC8UavbPYymPlx0tYngZllhUO0FLF52vlMVYvlYkT2VBfOe1WB3ZV4ailAWKSZh004oiMAZkY"
             >
-              <button  className="mr-auto btn btn-dark">
-                Pay Now
-              </button>
+              <button className="mr-auto btn btn-dark">Pay Now</button>
             </StripeCheckout>
           </div>
         </div>

@@ -33,10 +33,13 @@ function Navbars() {
             {user && role === "admin" && (
               <>
                 <Nav.Link href="/addRoom/:userId">Add Room</Nav.Link>
-                <Nav.Link onClick={handleLogout}>{user} - Logout</Nav.Link>              </>
+                <Nav.Link href="/allbookings">All Bookings</Nav.Link>
+                <Nav.Link onClick={handleLogout}>{user} - Logout</Nav.Link>{" "}
+              </>
             )}
             {user && role === "user" && (
               <>
+                <Nav.Link href="/bookinghistory">My Bookings</Nav.Link>
                 <Nav.Link onClick={handleLogout}>{user} - Logout</Nav.Link>
               </>
             )}

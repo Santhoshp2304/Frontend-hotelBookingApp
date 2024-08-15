@@ -12,3 +12,8 @@
     width:100% !important;
     border-radius: 5px !important;
 }
+
+input,select,.range{
+    border: black 2px solid;
+    border-radius: 5px;
+}

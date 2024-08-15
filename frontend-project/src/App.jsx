@@ -8,6 +8,8 @@ import AddRoom from "./components/AddRoom";
 import BookingPage from "./components/BookingPage";
 import { AuthProdiver } from "./context/AuthContext";
 import Landingpage from "./components/Landingpage";
+import BookingHistory from "./components/BookingHistory";
+import AllBookings from "./components/AllBookings";
 
 function App() {
   const isAuthenticated = !!localStorage.getItem("token");
@@ -28,7 +30,14 @@ function App() {
               path="/bookingpage/:roomid/:fromdate/:todate"
               Component={BookingPage}
             />
-
+            <Route
+              path="/bookinghistory"
+              Component={BookingHistory}
+            />
+            <Route
+              path="/allbookings"
+              Component={AllBookings}
+            />
             <Route path="*" element={<Navigate to={"/login"}></Navigate>} />
           </Routes>
         </BrowserRouter>
