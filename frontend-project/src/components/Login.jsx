@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Login() {
-  const navigate = useNavigate();
+  const navigate = useNavigate('');
   const { login } = useContext(AuthContext);
   const initialValues = {
     email: "",
@@ -27,9 +27,12 @@ function Login() {
     try {
       if(localStorage.getItem('token')) return localStorage.removeItem('token','user','role','userId')
       await login(values);
-      message.success("logged in successfully");
       navigate("/home");
-      window.location.reload();
+      navigate(0);
+      message.success("logged in successfully");
+      
+    
+      // window.location.reload();
       // console.log(values);
     } catch (error) {
       console.log(error);

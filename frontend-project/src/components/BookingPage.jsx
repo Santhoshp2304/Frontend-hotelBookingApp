@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import moment from "moment";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import { message } from "antd";
@@ -15,6 +15,7 @@ function BookingPage() {
   const [totaldays, setTotaldays] = useState(null);
   const user = localStorage.getItem("user");
   const userId = localStorage.getItem("userId");
+  const navigate =useNavigate();
   const onToken = async (token) => {
     // console.log(token);
     const bookingDetails = {
@@ -40,7 +41,7 @@ function BookingPage() {
         "Your room was booked successfully",
         "success"
       ).then((result) => {
-        window.location.href = `/bookinghistory`;
+        navigate('/bookinghistory') ;
       });
     } catch (error) {
       console.log(error.message);

@@ -27,13 +27,13 @@ function App() {
                 <Route path="/login" Component={Login} />
                 <Route path="/register" Component={Register} />
                 <Route path="/" Component={Landingpage} />
-                <Route path ="*" exact element ={<Navigate to ={"/"}/>}/>
+                <Route path ="*" Component ={Landingpage}/>
               </>
             )}
 
             {isAuthenticated && (
               <>
-                <Route path="/home" exact element={<Home />} />
+                <Route path="/home"  exact element={<Home />} />
                 <Route path="/addroom" Component={AddRoom} />
                 <Route
                   path="/bookingpage/:roomid/:fromdate/:todate"
@@ -42,7 +42,7 @@ function App() {
                 <Route path="/bookinghistory" Component={BookingHistory} />
                 <Route path="/allbookings" Component={AllBookings} />
                 <Route path="/allusers" Component={AllUsers} />
-                <Route path="*" element={<Navigate to={"/home"} />} />
+                <Route path="*" exact element={Home} />
               </>
             )}
           </Routes>

@@ -12,11 +12,13 @@ function Navbars() {
   const role = localStorage.getItem("role");
   // console.log(user, role);
 
-  const handleLogout = () => {
-    logout();
+  const handleLogout = async(e) => {
+    e.preventDefault();
+    await logout();
     message.success("Logged out successfully");
     navigate("/login");
-    window.location.reload();
+    navigate(0)
+    // window.location.reload();
   };
   return (
     <AuthProdiver>
