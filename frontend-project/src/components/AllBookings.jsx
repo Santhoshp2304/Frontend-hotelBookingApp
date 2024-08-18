@@ -17,7 +17,7 @@ function AllBookings() {
   },[])
   return (
     <div>
-      <Container className="mt-3">
+      <Container className="mt-5 p-5">
 
         {bookings.length > 0 ? (
           bookings.map((booking,i) => (

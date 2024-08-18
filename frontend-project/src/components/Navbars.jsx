@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Navbar, Container, Nav } from "react-bootstrap";
+import { Navbar, Container, Nav, Dropdown } from "react-bootstrap";
 import { AuthContext, AuthProdiver } from "../context/AuthContext";
 import { message } from "antd";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { Navigate, useNavigate } from "react-router-dom";
 
 function Navbars() {
@@ -15,12 +16,13 @@ function Navbars() {
     logout();
     message.success("Logged out successfully");
     navigate("/login");
+    window.location.reload();
   };
   return (
     <AuthProdiver>
-      <Navbar bg="dark" data-bs-theme="dark">
+      <Navbar bg="dark" data-bs-theme="dark" className="fixed-top  mb-5">
         <Container>
-          <Navbar.Brand>
+          <Navbar.Brand href="/home">
             <i>HotelBooking.com</i>
           </Navbar.Brand>
           <Nav className="me-right">
@@ -31,17 +33,44 @@ function Navbars() {
               </>
             )}
             {user && role === "admin" && (
-              <>
-                <Nav.Link href="/addRoom/:userId">Add Room</Nav.Link>
-                <Nav.Link href="/allbookings">All Bookings</Nav.Link>
-                <Nav.Link onClick={handleLogout}>{user} - Logout</Nav.Link>{" "}
-              </>
+              // <>
+              //   <Nav.Link href="/addRoom">Add Room</Nav.Link>
+              //   <Nav.Link href="/allbookings">All Bookings</Nav.Link>
+              //   <Nav.Link onClick={handleLogout}><AccountCircleIcon/>{user} - Logout</Nav.Link>{" "}
+              // </>
+              <Dropdown className="btn btn-dark">
+                <Dropdown.Toggle className="btn btn-dark">
+                  <AccountCircleIcon />
+                  {user} - {role}{" "}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/allbookings">
+                    All Bookings
+                  </Dropdown.Item>
+                  <Dropdown.Item href="/addRoom">Add Room</Dropdown.Item>
+                  <Dropdown.Item href="/allusers">All Users</Dropdown.Item>
+
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             )}
             {user && role === "user" && (
-              <>
-                <Nav.Link href="/bookinghistory">My Bookings</Nav.Link>
-                <Nav.Link onClick={handleLogout}>{user} - Logout</Nav.Link>
-              </>
+              // <>
+              //   <Nav.Link href="/bookinghistory">My Bookings</Nav.Link>
+              //   <Nav.Link onClick={handleLogout}><AccountCircleIcon/>{user} - Logout</Nav.Link>
+              // </>
+              <Dropdown className="btn btn-dark">
+                <Dropdown.Toggle className="btn btn-dark">
+                  <AccountCircleIcon />
+                  {user} - {role}{" "}
+                </Dropdown.Toggle>
+                <Dropdown.Menu>
+                  <Dropdown.Item href="/bookinghistory">
+                    My Bookings
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
             )}
           </Nav>
         </Container>

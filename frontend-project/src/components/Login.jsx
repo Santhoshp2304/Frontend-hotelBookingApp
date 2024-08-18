@@ -29,6 +29,7 @@ function Login() {
       await login(values);
       message.success("logged in successfully");
       navigate("/home");
+      window.location.reload();
       console.log(values);
     } catch (error) {
       console.log(error);

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Container } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
 import Roomcard from "./Roomcard";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
@@ -13,6 +13,8 @@ function Home() {
   const [todate, setTodate] = useState();
   const [duplicateRooms, setDuplicateRooms] = useState([]);
   const [searchKey, setSearchKey] = useState("");
+  const [roomReviews, setRoomReviews] = useState([]);
+
 
   const disabledDate = (current) => {
     // Disable dates before today
@@ -74,13 +76,41 @@ function Home() {
       console.log(error);
     }
   }
+  const filterByAmount = (e) => {
+    if (e == "all") {
+      const temp = duplicateRooms;
+      setRooms(temp);
+    }
+    if (e == "Under5000") {
+      const temp = duplicateRooms.filter((room) => room.rentperday <= 5000);
+      setRooms(temp);
+    }
+    if (e == "Above5000") {
+      const temp = duplicateRooms.filter((room) => room.rentperday >= 5000);
+      setRooms(temp);
+    }
+  };
+  const getReviews = async () => {
+    try {
+      const reviewResponse = await axios.get(
+        `http://localhost:3000/apiReview/getReviews`
+      );
+
+      setRoomReviews(reviewResponse.data);
+      console.log(reviewResponse.data);
+    } catch (error) {
+      console.log("error in fetching reviews");
+    }
+  };
+
   useEffect(() => {
     fetchRooms();
+    getReviews();
   }, []);
   return (
     <div>
       <Container className="mb-5">
-        <div className="row bs mt-5 p-3">
+        <div className="row sticky-top" style={{ paddingTop: 100 }}>
           <div className="col-md-3">
             <RangePicker
               className="range"
@@ -99,22 +129,33 @@ function Home() {
             />
           </div>
           <div className="col-md-3">
-            <select className="w-100">
+            <select
+              className="w-100 d-flex d-grid"
+              onChange={(e) => filterByAmount(e.target.value)}
+            >
               <option value="all">All</option>
-              <option value="delux">Delux</option>
-              <option value="non-delux">Non-Delux</option>
+              <option value="Under5000">Under Rs.5000</option>
+              <option value="Above5000">Above Rs.5000</option>
             </select>
           </div>
         </div>
-
-        {rooms.length>0?rooms?.map((room) => (
-          <Roomcard
-            key={room?._id}
-            room={room}
-            fromdate={fromdate}
-            todate={todate}
-          />
-        )):(<h2 className="text-center mt-5">Sorry room not found!</h2>)}
+        <div className="mt-5">
+          {rooms.length > 0 ? (
+            rooms?.map((room) => (
+              <>
+                <Roomcard
+                  key={room?._id}
+                  room={room}
+                  fromdate={fromdate}
+                  todate={todate}
+                  reviews ={roomReviews.filter(r => r.roomId == room._id)}
+                />
+              </>
+            ))
+          ) : (
+            <h2 className="text-center mt-5">Sorry room not found!</h2>
+          )}
+        </div>
       </Container>
     </div>
   );

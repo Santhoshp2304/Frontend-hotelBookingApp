@@ -2,7 +2,8 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Container, Card } from "react-bootstrap";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
-
+import Swal from "sweetalert2";
+import { Tag } from "antd";
 
 function BookingHistory() {
   const [userBookings, setUserBookings] = useState([]);
@@ -15,6 +16,19 @@ function BookingHistory() {
     setUserBookings(response.data);
     console.log(response.data);
   };
+  const cancelBooking = async (bookingId, roomId) => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/apiBooking/cancelBooking",
+        { bookingId, roomId }
+      );
+      Swal.fire("Congrats!", response.data, "success").then((result) => {
+        window.location.href = "/bookinghistory";
+      });
+    } catch (error) {
+      Swal.fire("Oops!", "Something went wrong", "error");
+    }
+  };
 
   useEffect(() => {
     fetchBookings();
@@ -22,7 +36,7 @@ function BookingHistory() {
 
   return (
     <div>
-      <Container className="mt-3">
+      <Container className="mt-5 p-5">
         {userBookings.length > 0 ? (
           userBookings.map((booking) => (
             <Card className="mt-3 w-75">
@@ -38,12 +52,26 @@ function BookingHistory() {
                   Check-Out : {booking.todate}
                 </Card.Subtitle>
                 <Card.Subtitle className="mb-2">
-                  Amount : <CurrencyRupeeIcon/>{booking.totalamount}
+                  Amount : <CurrencyRupeeIcon />
+                  {booking.totalamount}
                 </Card.Subtitle>
                 <Card.Subtitle className="mb-2">
-                  Status : {booking.status}
+                  Status :{" "}
+                  {booking.status != "cancelled" ? (
+                    <Tag color="green">Confirmed</Tag>
+                  ) : (
+                    <Tag color="red">Cancelled</Tag>
+                  )}
                 </Card.Subtitle>
-                <button className="btn btn-dark" style={{float:"right"}}>Cancel Booking</button>
+                {booking.status != "cancelled" && (
+                  <button
+                    className="btn btn-dark"
+                    style={{ float: "right" }}
+                    onClick={() => cancelBooking(booking._id, booking.roomId)}
+                  >
+                    Cancel Booking
+                  </button>
+                )}
               </Card.Body>
             </Card>
           ))

@@ -33,7 +33,7 @@ function AddRoom() {
   };
   return (
     <div>
-      <Container className="mt-3 p-2 bs">
+      <Container className="mt-5 p-5 bs">
         <h3 className="p-2 text-center">ADD ROOM HERE</h3>
         <Form name="add-room" onFinish={onFinish}>
           <Form.Item

@@ -11,11 +11,9 @@ export const AuthProdiver = ({ children }) => {
       "http://localhost:3000/apiUser/register",
       values
     );
-    
   };
 
   const login = async (values) => {
-    
     const response = await axios.post(
       "http://localhost:3000/apiUser/login",
       values
@@ -26,15 +24,16 @@ export const AuthProdiver = ({ children }) => {
       { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
     );
     setUser(userResponse.data);
-    localStorage.setItem('user',userResponse.data.name);
-    localStorage.setItem('role',userResponse.data.role);    
-    localStorage.setItem('userId',userResponse.data.userId);    
+    localStorage.setItem("user", userResponse.data.name);
+    localStorage.setItem("role", userResponse.data.role);
+    localStorage.setItem("userId", userResponse.data.userId);
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('role');
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("role");
     setUser(null);
   };
 

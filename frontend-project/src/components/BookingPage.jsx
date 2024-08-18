@@ -34,8 +34,8 @@ function BookingPage() {
         bookingDetails
       );
       // message.success(response.data);
-      console.log(response.data);
-      Swal.fire(
+      // console.log(response.data);
+     await Swal.fire(
         "Congrats!",
         "Your room was booked successfully",
         "success"
@@ -43,7 +43,7 @@ function BookingPage() {
         window.location.href = `/bookinghistory`;
       });
     } catch (error) {
-      console.log(error.message);
+      // console.log(error.message);
       // message.error(error);
       Swal.fire("Oops!", "Something went wrong", "error");
     }

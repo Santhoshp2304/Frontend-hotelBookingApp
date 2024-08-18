@@ -10,9 +10,11 @@ import { AuthProdiver } from "./context/AuthContext";
 import Landingpage from "./components/Landingpage";
 import BookingHistory from "./components/BookingHistory";
 import AllBookings from "./components/AllBookings";
+import AllUsers from "./components/AllUsers";
+import { useState } from "react";
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem("token");
+  const [isAuthenticated] = useState(!!localStorage.getItem("token"));
   console.log(isAuthenticated);
   return (
     <div>
@@ -20,25 +22,29 @@ function App() {
         <BrowserRouter>
           <Navbars />
           <Routes>
-            <Route path="/login" Component={Login} />
-            <Route path="/register" Component={Register} />
-            <Route path="/" Component={Landingpage} />
+            {!isAuthenticated && (
+              <>
+                <Route path="/login" Component={Login} />
+                <Route path="/register" Component={Register} />
+                <Route path="/" Component={Landingpage} />
+                <Route path ="*" exact element ={<Navigate to ={"/"}/>}/>
+              </>
+            )}
 
-            <Route path="/home" exact element={<Home />} />
-            <Route path="/addroom" Component={AddRoom} />
-            <Route
-              path="/bookingpage/:roomid/:fromdate/:todate"
-              Component={BookingPage}
-            />
-            <Route
-              path="/bookinghistory"
-              Component={BookingHistory}
-            />
-            <Route
-              path="/allbookings"
-              Component={AllBookings}
-            />
-            <Route path="*" element={<Navigate to={"/login"}></Navigate>} />
+            {isAuthenticated && (
+              <>
+                <Route path="/home" exact element={<Home />} />
+                <Route path="/addroom" Component={AddRoom} />
+                <Route
+                  path="/bookingpage/:roomid/:fromdate/:todate"
+                  Component={BookingPage}
+                />
+                <Route path="/bookinghistory" Component={BookingHistory} />
+                <Route path="/allbookings" Component={AllBookings} />
+                <Route path="/allusers" Component={AllUsers} />
+                <Route path="*" element={<Navigate to={"/home"} />} />
+              </>
+            )}
           </Routes>
         </BrowserRouter>
       </AuthProdiver>
