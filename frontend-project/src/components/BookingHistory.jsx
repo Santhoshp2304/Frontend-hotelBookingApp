@@ -11,15 +11,15 @@ function BookingHistory() {
   const fetchBookings = async () => {
     const userId = localStorage.getItem("userId");
     const response = await axios.get(
-      `http://localhost:3000/apiBooking/getBookings/${userId}`
+      `https://backend-hotelbookingapp-2.onrender.com/apiBooking/getBookings/${userId}`
     );
     setUserBookings(response.data);
-    console.log(response.data);
+    // console.log(response.data);
   };
   const cancelBooking = async (bookingId, roomId) => {
     try {
       const response = await axios.post(
-        "http://localhost:3000/apiBooking/cancelBooking",
+        "https://backend-hotelbookingapp-2.onrender.com/apiBooking/cancelBooking",
         { bookingId, roomId }
       );
       Swal.fire("Congrats!", response.data, "success").then((result) => {

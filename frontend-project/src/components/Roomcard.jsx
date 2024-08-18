@@ -27,8 +27,8 @@ function Roomcard({ room, fromdate, todate, reviews }) {
   const user = localStorage.getItem("user");
 
   const postReview = async () => {
-    console.log(review);
-    console.log(rating);
+    // console.log(review);
+    // console.log(rating);
     const newReview = {
       username: user,
       roomId: room._id,
@@ -93,7 +93,7 @@ function Roomcard({ room, fromdate, todate, reviews }) {
         <Modal.Header closeButton>
           <Modal.Title>{room.name}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{ overflow: "auto", height: "70vh" }}>
           <Carousel>
             {room.images.map((url) => {
               return (
@@ -127,12 +127,12 @@ function Roomcard({ room, fromdate, todate, reviews }) {
               <Card.Header><AccountCircleIcon/>{review.username}</Card.Header>
               <Card.Body>
                 <h4>{review.review}</h4>
-                <h4><Rating name="read-only" value={review.rating} readOnly /></h4>
+                <h4><Rating name="read-only" value={review.rating} size="small" readOnly /></h4>
               </Card.Body>
             </Card>
           ))):(<h4 className="text-center">No reviews</h4>)}
         </Modal.Body>
-        <hr />
+        <Modal.Footer>
         <Container>
           <form
             style={{
@@ -168,6 +168,7 @@ function Roomcard({ room, fromdate, todate, reviews }) {
             </button>
           </form>
         </Container>
+        </Modal.Footer>
       </Modal>
     </div>
   );

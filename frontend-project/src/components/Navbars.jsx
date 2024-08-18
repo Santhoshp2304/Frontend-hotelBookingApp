@@ -10,7 +10,7 @@ function Navbars() {
   const { logout } = useContext(AuthContext);
   const user = localStorage.getItem("user");
   const role = localStorage.getItem("role");
-  console.log(user, role);
+  // console.log(user, role);
 
   const handleLogout = () => {
     logout();

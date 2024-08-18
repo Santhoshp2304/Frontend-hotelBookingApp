@@ -8,19 +8,19 @@ export const AuthProdiver = ({ children }) => {
 
   const register = async (values) => {
     const response = await axios.post(
-      "http://localhost:3000/apiUser/register",
+      "https://backend-hotelbookingapp-2.onrender.com/apiUser/register",
       values
     );
   };
 
   const login = async (values) => {
     const response = await axios.post(
-      "http://localhost:3000/apiUser/login",
+      "https://backend-hotelbookingapp-2.onrender.com/apiUser/login",
       values
     );
     localStorage.setItem("token", response.data.token);
     const userResponse = await axios.get(
-      "http://localhost:3000/apiUser/getUser",
+      "https://backend-hotelbookingapp-2.onrender.com/apiUser/getUser",
       { headers: { Authorization: `Bearer ${localStorage.getItem("token")}` } }
     );
     setUser(userResponse.data);

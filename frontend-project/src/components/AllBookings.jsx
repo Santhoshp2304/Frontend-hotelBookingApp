@@ -6,21 +6,24 @@ import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 function AllBookings() {
   const [bookings, setBookings] = useState([]);
   const fetchAllBookings = async () => {
-    const response = await axios.get(
-      "http://localhost:3000/apiBooking//getAllBookings"
-    );
-    setBookings(response.data);
-    console.log(response.data)
+    try {
+      const response = await axios.get(
+        "https://backend-hotelbookingapp-2.onrender.com/apiBooking//getAllBookings"
+      );
+      setBookings(response.data);
+      // console.log(response.data)
+    } catch (error) {
+      console.log(error);
+    }
   };
-  useEffect(()=>{
+  useEffect(() => {
     fetchAllBookings();
-  },[])
+  }, []);
   return (
     <div>
       <Container className="mt-5 p-5">
-
         {bookings.length > 0 ? (
-          bookings.map((booking,i) => (
+          bookings.map((booking, i) => (
             <Card className="mt-3 w-75" key={i}>
               <Card.Body>
                 <Card.Title className="mb-3">{booking.room}</Card.Title>

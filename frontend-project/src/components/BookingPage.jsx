@@ -16,7 +16,7 @@ function BookingPage() {
   const user = localStorage.getItem("user");
   const userId = localStorage.getItem("userId");
   const onToken = async (token) => {
-    console.log(token);
+    // console.log(token);
     const bookingDetails = {
       room: room.name,
       roomId: roomid,
@@ -30,7 +30,7 @@ function BookingPage() {
 
     try {
       const response = await axios.post(
-        `http://localhost:3000/apiBooking/book`,
+        `https://backend-hotelbookingapp-2.onrender.com/apiBooking/book`,
         bookingDetails
       );
       // message.success(response.data);
@@ -43,7 +43,7 @@ function BookingPage() {
         window.location.href = `/bookinghistory`;
       });
     } catch (error) {
-      // console.log(error.message);
+      console.log(error.message);
       // message.error(error);
       Swal.fire("Oops!", "Something went wrong", "error");
     }
@@ -51,10 +51,10 @@ function BookingPage() {
 
   const fetchRoom = async () => {
     const response = await axios.get(
-      `http://localhost:3000/apiRoom/getRoom/${roomid}`
+      `https://backend-hotelbookingapp-2.onrender.com/apiRoom/getRoom/${roomid}`
     );
     setRoom(response.data);
-    console.log(response.data);
+    // console.log(response.data);
     setImg(response.data.images[0]);
   };
 
@@ -62,17 +62,17 @@ function BookingPage() {
     fetchRoom();
     const fdate = moment(fromdate, "YYYY-MM-DD");
     const tdate = moment(todate, "YYYY-MM-DD");
-    console.log(fdate);
+    // console.log(fdate);
     setTotaldays(moment.duration(tdate.diff(fdate)).asDays() + 1);
 
-    console.log(totaldays);
-    console.log(room.rentperday);
+    // console.log(totaldays);
+    // console.log(room.rentperday);
   }, []);
   const totalamount = totaldays * room.rentperday;
 
   return (
     <div>
-      <Container className="bs ">
+      <Container className="bs mt-5 p-5 ">
         <div className="row m-3 p-3">
           <div className="col-sm-6">
             <h1>{room.name}</h1>

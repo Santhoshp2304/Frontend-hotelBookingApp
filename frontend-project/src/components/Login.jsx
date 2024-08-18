@@ -30,7 +30,7 @@ function Login() {
       message.success("logged in successfully");
       navigate("/home");
       window.location.reload();
-      console.log(values);
+      // console.log(values);
     } catch (error) {
       console.log(error);
       message.error("login failed");

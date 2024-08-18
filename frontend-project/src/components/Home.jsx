@@ -23,15 +23,6 @@ function Home() {
 
   const filterByDate = (dates) => {
     const [startDate, endDate] = dates;
-
-    console.log(
-      moment("2024-08-16").isBetween(
-        moment(startDate.$d).format("YYYY-MM-DD"),
-        moment(endDate.$d).format("YYYY-MM-DD"),
-        null,
-        "[]"
-      )
-    );
     setFromdate(moment(startDate.$d).format("YYYY-MM-DD"));
     setTodate(moment(endDate.$d).format("YYYY-MM-DD"));
     let tempRoom = [];
@@ -47,12 +38,12 @@ function Home() {
           )
       );
 
-      console.log(isBooked);
+      // console.log(isBooked);
       if (!isBooked) {
         tempRoom.push(room);
       }
     });
-    console.log(tempRoom);
+    // console.log(tempRoom);
     setRooms(tempRoom);
   };
 
@@ -67,11 +58,11 @@ function Home() {
   async function fetchRooms() {
     try {
       const response = await axios.get(
-        "http://localhost:3000/apiRoom/getRooms"
+        "https://backend-hotelbookingapp-2.onrender.com/apiRoom/getRooms"
       );
       setRooms(response.data);
       setDuplicateRooms(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -93,11 +84,11 @@ function Home() {
   const getReviews = async () => {
     try {
       const reviewResponse = await axios.get(
-        `http://localhost:3000/apiReview/getReviews`
+        `https://backend-hotelbookingapp-2.onrender.com/apiReview/getReviews`
       );
 
       setRoomReviews(reviewResponse.data);
-      console.log(reviewResponse.data);
+      // console.log(reviewResponse.data);
     } catch (error) {
       console.log("error in fetching reviews");
     }

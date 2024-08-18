@@ -3,10 +3,10 @@ import { Form, Input, Button, Upload, message } from "antd";
 import { Container } from "react-bootstrap";
 import { UploadOutlined } from "@ant-design/icons";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function AddRoom() {
-  
-  
+  const navigate =useNavigate();
   const [media, setMedia] = useState([]);
   const handleUpload = ({ fileList }) => setMedia(fileList);
 
@@ -22,13 +22,14 @@ function AddRoom() {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/apiRoom/addRoom",
+        "https://backend-hotelbookingapp-2.onrender.com/apiRoom/addRoom",
         formData
       );
-      
-      message.success('Room added successfully!');
+
+      message.success("Room added successfully!");
+      Navigate('/home')
     } catch (error) {
-      message.error('Room adding Failed!')
+      message.error("Room adding Failed!");
     }
   };
   return (
@@ -55,7 +56,6 @@ function AddRoom() {
             rules={[
               {
                 required: true,
-                type: Number,
                 message: "Please input your phonenumber!",
               },
             ]}
@@ -67,7 +67,6 @@ function AddRoom() {
             rules={[
               {
                 required: true,
-                type: Number,
                 message: "Please input your maximum count!",
               },
             ]}
@@ -79,7 +78,6 @@ function AddRoom() {
             rules={[
               {
                 required: true,
-                type: Number,
                 message: "Please input your room rent per day!",
               },
             ]}
@@ -88,7 +86,9 @@ function AddRoom() {
           </Form.Item>
           <Form.Item
             name="description"
-            rules={[{ required: true, message: "Please input your description!" }]}
+            rules={[
+              { required: true, message: "Please input your description!" },
+            ]}
           >
             <Input placeholder="Description"></Input>
           </Form.Item>
@@ -104,11 +104,7 @@ function AddRoom() {
             </Upload>
           </Form.Item>
           <Form.Item className="d-flex justify-content-center">
-            <Button
-              className="btn btn-dark"
-              htmlType="submit"
-              
-            >
+            <Button className="btn btn-dark" htmlType="submit">
               Add Room
             </Button>
           </Form.Item>

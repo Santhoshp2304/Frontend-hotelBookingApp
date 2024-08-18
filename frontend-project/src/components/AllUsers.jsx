@@ -6,9 +6,9 @@ function AllUsers() {
   const [users, setUsers] = useState([]);
   const fetchAllUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/apiUser/getAllUsers");
+      const response = await axios.get("https://backend-hotelbookingapp-2.onrender.com/apiUser/getAllUsers");
       setUsers(response.data);
-      console.log(users)
+    //   console.log(users)
     } catch (error) {
       console.log(error);
     }
