@@ -4,10 +4,11 @@ import { Container, Card } from "react-bootstrap";
 import CurrencyRupeeIcon from "@mui/icons-material/CurrencyRupee";
 import Swal from "sweetalert2";
 import { Tag } from "antd";
+import { useNavigate } from "react-router-dom";
 
 function BookingHistory() {
   const [userBookings, setUserBookings] = useState([]);
-
+  const navigate = useNavigate();
   const fetchBookings = async () => {
     const userId = localStorage.getItem("userId");
     const response = await axios.get(
@@ -23,7 +24,7 @@ function BookingHistory() {
         { bookingId, roomId }
       );
       Swal.fire("Congrats!", response.data, "success").then((result) => {
-        window.location.href = "/bookinghistory";
+        navigate("/home");
       });
     } catch (error) {
       Swal.fire("Oops!", "Something went wrong", "error");
