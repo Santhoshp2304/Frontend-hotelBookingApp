@@ -132,10 +132,10 @@ function Home() {
         </div>
         <div className="mt-5">
           {rooms.length > 0 ? (
-            rooms?.map((room) => (
+            rooms?.map((room,i) => (
               <>
                 <Roomcard
-                  key={room?._id}
+                  key={i}
                   room={room}
                   fromdate={fromdate}
                   todate={todate}

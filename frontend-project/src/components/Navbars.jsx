@@ -17,8 +17,7 @@ function Navbars() {
     await logout();
     message.success("Logged out successfully");
     navigate("/login");
-    navigate(0)
-    // window.location.reload();
+    
   };
   return (
     <AuthProdiver>

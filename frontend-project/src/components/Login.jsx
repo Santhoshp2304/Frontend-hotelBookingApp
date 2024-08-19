@@ -28,7 +28,7 @@ function Login() {
       if(localStorage.getItem('token')) return localStorage.removeItem('token','user','role','userId')
       await login(values);
       navigate("/home");
-      navigate(0);
+     
       message.success("logged in successfully");
       
     
