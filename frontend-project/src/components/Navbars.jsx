@@ -12,15 +12,15 @@ function Navbars() {
   const role = localStorage.getItem("role");
   // console.log(user, role);
 
-  const handleLogout = async(e) => {
-    e.preventDefault();
+  const handleLogout = async() => {
+    
     await logout();
     message.success("Logged out successfully");
     navigate("/login");
     
   };
   return (
-    <AuthProdiver>
+    
       <Navbar bg="dark" data-bs-theme="dark" className="fixed-top  mb-5">
         <Container>
           <Navbar.Brand href="/home">
@@ -76,7 +76,7 @@ function Navbars() {
           </Nav>
         </Container>
       </Navbar>
-    </AuthProdiver>
+    
   );
 }
 

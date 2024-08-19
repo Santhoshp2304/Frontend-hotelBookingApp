@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button, Container } from "react-bootstrap";
 import * as Yup from "yup";
 import { message } from "antd";
@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
 
 function Login() {
-  const navigate = useNavigate('');
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
   const initialValues = {
     email: "",
@@ -25,18 +25,14 @@ function Login() {
 
   const onSubmit = async (values) => {
     try {
-      if(localStorage.getItem('token')) return localStorage.removeItem('token','user','role','userId')
+      if (localStorage.getItem("token"))
+        return localStorage.removeItem("token", "user", "role", "userId");
       await login(values);
+      message.success("Logged in successfully");
       navigate("/home");
-     
-      message.success("logged in successfully");
-      
-    
-      // window.location.reload();
-      // console.log(values);
     } catch (error) {
       console.log(error);
-      message.error("login failed");
+      message.error(`Login failed`);
     }
   };
 
@@ -67,7 +63,7 @@ function Login() {
               <ErrorMessage name="password" component="div"></ErrorMessage>
             </div>
             <div className="d-flex justify-content-center mt-4 ">
-              <Button  variant="dark" type="submit" size="lg">
+              <Button variant="dark" type="submit" size="lg">
                 Login
               </Button>
             </div>

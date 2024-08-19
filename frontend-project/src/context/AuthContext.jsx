@@ -20,7 +20,7 @@ export const AuthProdiver = ({ children }) => {
         setUser(response.data);
         console.log(user);
       } catch (error) {
-        console.error("Error fetching user details",error);
+        console.error("Error fetching user details");
       }
     };
     if (localStorage.getItem("token")) {
@@ -28,18 +28,18 @@ export const AuthProdiver = ({ children }) => {
     }
   }, []);
 
-  const register = async (credentials) => {
+  const register = async (values) => {
     const response = await axios.post(
       "https://backend-hotelbookingapp-2.onrender.com/apiUser/register",
-      credentials
+      values
     );
   };
 
-  const login = async (credentials) => {
-    try {
+  const login = async (values) => {
+    
       const response = await axios.post(
         "https://backend-hotelbookingapp-2.onrender.com/apiUser/login",
-        credentials
+        values
       );
       localStorage.setItem("token", response.data.token);
       const userResponse = await axios.get(
@@ -52,9 +52,6 @@ export const AuthProdiver = ({ children }) => {
       localStorage.setItem("userId", userResponse.data.userId);
     
       
-    } catch (error) {
-      console.error('Login failed')
-    }
   };
 
   const logout = () => {
