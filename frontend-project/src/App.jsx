@@ -2,7 +2,7 @@ import "./App.css";
 import Navbars from "./components/Navbars";
 import Login from "./components/Login";
 import Register from "./components/Register";
-import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, Link } from "react-router-dom";
 import Home from "./components/Home";
 import AddRoom from "./components/AddRoom";
 import BookingPage from "./components/BookingPage";
@@ -17,23 +17,23 @@ function App() {
   return (
     
       <AuthProdiver>
-        <BrowserRouter>
+        <Router>
           <Navbars />
           <Routes>
-            <Route path="/" Component={Landingpage}/>
-            <Route path="/login" Component={Login} />
-            <Route path="/register" Component={Register} />
-            <Route path="/home" Component={Home} />
-            <Route path="/addroom" Component={AddRoom} />
+            <Route path="/" exact element={<Landingpage/>}/>
+            <Route path="/login" exact element={<Login/>} />
+            <Route path="/register" exact element={<Register/>} />
+            <Route path="/home" exact element={<Home/>} />
+            <Route path="/addroom" exact element={<AddRoom/>} />
             <Route
               path="/bookingpage/:roomid/:fromdate/:todate"
-              Component={BookingPage}
+              exact element={<BookingPage/>}
             />
-            <Route path="/bookinghistory" Component={BookingHistory} />
-            <Route path="/allbookings" Component={AllBookings} />
-            <Route path="/allusers" Component={AllUsers} />
+            <Route path="/bookinghistory" exact element={<BookingHistory/>} />
+            <Route path="/allbookings" exact element={<AllBookings/>} />
+            <Route path="/allusers" exact element={<AllUsers/>} />
           </Routes>
-        </BrowserRouter>
+        </Router>
       </AuthProdiver>
     
   );

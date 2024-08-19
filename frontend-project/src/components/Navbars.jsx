@@ -12,15 +12,14 @@ function Navbars() {
   const role = localStorage.getItem("role");
   // console.log(user, role);
 
-  const handleLogout = async() => {
-    
+  const handleLogout = async (e) => {
+    e.preventDefault();
     await logout();
     message.success("Logged out successfully");
     navigate("/login");
-    
   };
   return (
-    
+    <AuthProdiver>
       <Navbar bg="dark" data-bs-theme="dark" className="fixed-top  mb-5">
         <Container>
           <Navbar.Brand href="/home">
@@ -34,49 +33,40 @@ function Navbars() {
               </>
             )}
             {user && role === "admin" && (
-              // <>
-              //   <Nav.Link href="/addRoom">Add Room</Nav.Link>
-              //   <Nav.Link href="/allbookings">All Bookings</Nav.Link>
-              //   <Nav.Link onClick={handleLogout}><AccountCircleIcon/>{user} - Logout</Nav.Link>{" "}
-              // </>
-              <Dropdown className="btn btn-dark">
-                <Dropdown.Toggle className="btn btn-dark">
-                  <AccountCircleIcon />
-                  {user} - {role}{" "}
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item href="/allbookings">
-                    All Bookings
-                  </Dropdown.Item>
-                  <Dropdown.Item href="/addRoom">Add Room</Dropdown.Item>
-                  <Dropdown.Item href="/allusers">All Users</Dropdown.Item>
-
-                  <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <>
+                <Nav.Link href="/addRoom">Add Room</Nav.Link>
+                <Nav.Link href="/allbookings">All Bookings</Nav.Link>
+                <Nav.Link href="/allusers">All Users</Nav.Link>
+                <Dropdown className="btn btn-dark">
+                  <Dropdown.Toggle className="btn btn-dark">
+                    <AccountCircleIcon />
+                    {user} - {role}{" "}
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </>
             )}
             {user && role === "user" && (
-              // <>
-              //   <Nav.Link href="/bookinghistory">My Bookings</Nav.Link>
-              //   <Nav.Link onClick={handleLogout}><AccountCircleIcon/>{user} - Logout</Nav.Link>
-              // </>
+              <>
+                <Nav.Link href="/bookinghistory">My Bookings</Nav.Link>
+              
               <Dropdown className="btn btn-dark">
                 <Dropdown.Toggle className="btn btn-dark">
                   <AccountCircleIcon />
                   {user} - {role}{" "}
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="/bookinghistory">
-                    My Bookings
-                  </Dropdown.Item>
                   <Dropdown.Item onClick={handleLogout}>Logout</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
+              </>
             )}
           </Nav>
         </Container>
       </Navbar>
-    
+    </AuthProdiver>
   );
 }
 
